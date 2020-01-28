@@ -3,7 +3,7 @@ var http = require("http");
 var PORT = 8080;
 
 var server = http.createServer(handleRequest);
-
+const fs = require("fs");
 // Start our server
 server.listen(PORT, function() {
     // Callback triggered when server is successfully listening. Hurray!
@@ -17,11 +17,11 @@ function handleRequest(req, res) {
 
     // Depending on the URL, display a different HTML file.
     switch (path) {
-        case "/":
+        case "/home":
             return displayRoot(path, req, res);
 
-        case "/portfolio":
-            return displayPortfolio(path, req, res);
+        case "/happy":
+            return displayHAppy(path, req, res);
 
         default:
             return display404(path, req, res);
@@ -30,32 +30,26 @@ function handleRequest(req, res) {
 
 // When someone visits the "http://localhost:8080/" path, this function is run.
 function displayRoot(url, req, res) {
-    var myHTML =
-        "<html>" +
-        "<body><h1>Home Page</h1>" +
-        "<a href='/portfolio'>Portfolio</a>" +
-        "</body></html>";
+    fs.readFile(__dirname + "/index.html", function(err, data) {
+        console.log("home sweet home");
+        // Configure the response to return a status code of 200 (meaning everything went OK), and to be an HTML document
+        res.writeHead(200, { "Content-Type": "text/html" });
 
-    // Configure the response to return a status code of 200 (meaning everything went OK), and to be an HTML document
-    res.writeHead(200, { "Content-Type": "text/html" });
-
-    // End the response by sending the client the myHTML string (which gets rendered as an HTML document thanks to the code above)
-    res.end(myHTML);
+        // End the response by sending the client the myHTML string (which gets rendered as an HTML document thanks to the code above)
+        res.end(data);
+    });
 }
 
 // When someone visits the "http://localhost:8080/portfolio" path, this function is run.
-function displayPortfolio(url, req, res) {
-    var myHTML =
-        "<html>" +
-        "<body><h1>My Portfolio</h1>" +
-        "<a href='/'>Go Home</a>" +
-        "</body></html>";
+function displayHAppy(url, req, res) {
+    console.log("feeling happy");
+    fs.readFile(__dirname + "/happyroute.html", function(err, data) {
+        // Configure the response to return a status code of 200 (meaning everything went OK), and to be an HTML document
+        res.writeHead(200, { "Content-Type": "text/html" });
 
-    // Configure the response to return a status code of 200 (meaning everything went OK), and to be an HTML document
-    res.writeHead(200, { "Content-Type": "text/html" });
-
-    // End the response by sending the client the myHTML string (which gets rendered as an HTML document thanks to the code above)
-    res.end(myHTML);
+        // End the response by sending the client the myHTML string (which gets rendered as an HTML document thanks to the code above)
+        res.end(data);
+    });
 }
 
 // When someone visits any path that is not specifically defined, this function is run.
