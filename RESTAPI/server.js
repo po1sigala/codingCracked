@@ -1,70 +1,37 @@
-var http = require("http");
+const express = require("express");
+const app = express();
+const PORT = 3001;
+//data
+const alex = {
+    id: 121000,
+    token: "abcd1",
+    secretToken: "blah",
+    video: "something.mp4"
+};
 
-var PORT = 8080;
-
-var server = http.createServer(handleRequest);
-const fs = require("fs");
-// Start our server
-server.listen(PORT, function() {
-    // Callback triggered when server is successfully listening. Hurray!
-    console.log("Server listening on: http://localhost:" + PORT);
+const josh = {
+    id: 1210001,
+    token: "abcd12",
+    secretToken: "blahblah",
+    video: "somethingElse.mp4"
+};
+const ruth = {
+    id: 131000,
+    token: "abffcd1",
+    secretToken: "blab blah",
+    video: "another.mp4"
+};
+const amber = {
+    id: 1255000,
+    token: "2222dkjshfdkjh1",
+    secretToken: "bloop",
+    video: "whoop.mp4"
+};
+//API routes
+app.get("/data", function(req, res) {
+    console.log(`hit data route`);
+    res.json(alex);
 });
-
-// Create a function which handles incoming requests and sends responses
-function handleRequest(req, res) {
-    // Capture the url the request is made to
-    var path = req.url;
-
-    // Depending on the URL, display a different HTML file.
-    switch (path) {
-        case "/home":
-            return displayRoot(path, req, res);
-
-        case "/happy":
-            return displayHAppy(path, req, res);
-
-        default:
-            return display404(path, req, res);
-    }
-}
-
-// When someone visits the "http://localhost:8080/" path, this function is run.
-function displayRoot(url, req, res) {
-    fs.readFile(__dirname + "/index.html", function(err, data) {
-        console.log("home sweet home");
-        // Configure the response to return a status code of 200 (meaning everything went OK), and to be an HTML document
-        res.writeHead(200, { "Content-Type": "text/html" });
-
-        // End the response by sending the client the myHTML string (which gets rendered as an HTML document thanks to the code above)
-        res.end(data);
-    });
-}
-
-// When someone visits the "http://localhost:8080/portfolio" path, this function is run.
-function displayHAppy(url, req, res) {
-    console.log("feeling happy");
-    fs.readFile(__dirname + "/happyroute.html", function(err, data) {
-        // Configure the response to return a status code of 200 (meaning everything went OK), and to be an HTML document
-        res.writeHead(200, { "Content-Type": "text/html" });
-
-        // End the response by sending the client the myHTML string (which gets rendered as an HTML document thanks to the code above)
-        res.end(data);
-    });
-}
-
-// When someone visits any path that is not specifically defined, this function is run.
-function display404(url, req, res) {
-    var myHTML =
-        "<html>" +
-        "<body><h1>404 Not Found </h1>" +
-        "<p>The page you were looking for: " +
-        url +
-        " can not be found</p>" +
-        "</body></html>";
-
-    // Configure the response to return a status code of 404 (meaning the page/resource asked for couldn't be found), and to be an HTML document
-    res.writeHead(404, { "Content-Type": "text/html" });
-
-    // End the response by sending the client the myHTML string (which gets rendered as an HTML document thanks to the code above)
-    res.end(myHTML);
-}
+app.listen(PORT, function() {
+    console.log(`listening on port ${PORT}`);
+});
