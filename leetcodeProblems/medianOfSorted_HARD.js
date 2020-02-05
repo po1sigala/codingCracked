@@ -6,20 +6,20 @@ var findMedianSortedArrays = function(nums1, nums2) {
     //i dont know which is longer and which has the larger numbers
 
     //an ascending list of numbers
-    const combined = nums1.concat(nums2).sort();
+    const combined = nums1.concat(nums2).sort((a, b) => {
+        return a - b;
+    });
     let median = 0;
-
+    console.log(combined);
     const middleFloor = Math.floor(combined.length / 2);
     switch (combined.length % 2) {
         case 0:
-            console.log("length was even");
             return (median =
                 (combined[middleFloor] + combined[middleFloor - 1]) / 2);
 
         case 1:
-            console.log("length was odd");
             return (median = combined[Math.ceil((combined.length - 1) / 2)]);
     }
 };
-console.log("should get 3.5");
-console.log(findMedianSortedArrays([1, 2, 3], [4, 5, 6, 7]));
+console.log("should get -1");
+console.log(findMedianSortedArrays([3], [-2, -1]));
