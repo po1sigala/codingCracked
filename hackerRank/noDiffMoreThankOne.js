@@ -3,13 +3,11 @@
 //my area can only contain a which are within one digit of each other
 
 const pickinga = (b, a) => {
-    a = a.split(" ");
-    console.log(a);
     let longest = [];
 
     a.map(int => {
         let test = [];
-
+        let i;
         for (i = 0; i < a.length; i++) {
             if (int - a[i] === 0 || int - a[i] === 1) {
                 test.push(a[i]);
@@ -23,4 +21,4 @@ const pickinga = (b, a) => {
     return longest.length;
 };
 
-console.log(pickinga(6, "1 2 3 3 4"));
+console.log(pickinga(6));
