@@ -15,42 +15,41 @@ return IPv4, IPv6, or Neither
 
 var validIPAddress = function(IP) {
     let response = "Neither";
-    if (IP.indexOf(".")) {
+    if (IP.indexOf(".") != -1) {
         let v4Arry = IP.split(".");
-        v4Arry.map(intGroup => {
-            // console.log(intGroup);
-
+        for (i = 0; i < v4Arry.length; i++) {
             if (
-                parseInt(intGroup) < 0 ||
-                parseInt(intGroup) > 255 ||
+                parseInt(v4Arry[i]) < 0 ||
+                parseInt(v4Arry[i]) > 255 ||
                 v4Arry.length != 4 ||
-                intGroup.indexOf("0") === 0 ||
-                /\D/.test(intGroup)
+                v4Arry[i].indexOf("0") === 0 ||
+                v4Arry[i].length < 1 ||
+                /\D/.test(v4Arry[i])
             ) {
-                return;
+                if (v4Arry[i].length != 1) {
+                    return (response = "Neither");
+                }
             } else {
                 response = "IPv4";
             }
-        });
-    } else if (IP.indexOf(":")) {
+        }
+    } else if (IP.indexOf(":") != -1) {
         let v6Arry = IP.split(":");
-        v6Arry.map(hexiGroup => {
-            console.log();
+
+        for (i = 0; i < v6Arry.length; i++) {
             if (
                 v6Arry.length != 8 ||
-                hexiGroup.length < 1 ||
-                hexiGroup.length > 4 ||
-                hexiGroup.test(/[^a-z0-9]/)
+                v6Arry[i].length < 1 ||
+                v6Arry[i].length > 4 ||
+                /[^a-f0-9A-F]/.test(v6Arry[i])
             ) {
-                return "Neither";
-            } else if (hexiGroup.length != 4 && hexiGroup.indexOf("0") != 0) {
-                return "Neither";
+                return (response = "Neither");
             } else {
-                return "IPv6";
+                response = "IPv6";
             }
-        });
+        }
     }
     return response;
 };
 
-console.log(validIPAddress("172.16.254.1"));
+console.log(validIPAddress("192.01.0.1"));
