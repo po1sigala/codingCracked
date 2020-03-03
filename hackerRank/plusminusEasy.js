@@ -8,15 +8,23 @@ function plusMinus(arr) {
     let negative = 0;
     let zeroes = 0;
     for (let i = 0; i < total; i++) {
-        if (arry[i] === 0) {
-        } else if (arry[i] < 0) {
+        if (arr[i] === 0) {
+            zeroes++;
+        } else if (arr[i] < 0) {
+            negative++;
         } else if (arr[i] > 0) {
+            positive++;
         } else {
             console.log(
                 `something weird is happening with the array at i it is ${arr[i]}`
             );
         }
     }
+    console.log(
+        `${positive / total}
+        ${negative / total}
+        ${zeroes / total}`
+    );
 }
 
 console.log(plusMinus([1, 1, 0, -1, -2]));
