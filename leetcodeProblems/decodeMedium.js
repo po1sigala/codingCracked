@@ -15,6 +15,8 @@ length 3 output 3
 then check concat of 1 and 2 12 if <27 then count it
 for instance 321 would count 3 and count 2 but not count 32 but then count 1 and 21 
 1223216
+12 23 21 6
+1 2 23 21 6
 */
     const numArray = s.split("");
     let result = 1;
@@ -26,4 +28,6 @@ for instance 321 would count 3 and count 2 but not count 32 but then count 1 and
             result++;
         }
     }
+    return result
 };
+console.log
